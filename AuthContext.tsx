@@ -1,6 +1,8 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { User } from './types';
 import { signInWithEmail, logout as authLogout, getUserProfile } from './lib/auth';
+import { auth } from './lib/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 interface AuthContextType {
   user: User | null;
@@ -18,15 +20,16 @@ export const AuthProvider = ({ children }: { children?: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const initAuth = async () => {
-      const storedUserId = localStorage.getItem('mock_session_user');
-      if (storedUserId) {
-        const profile = await getUserProfile(storedUserId);
-        setUser(profile);
-      }
-      setIsLoading(false);
-    };
-    initAuth();
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+        if (firebaseUser) {
+            const profile = await getUserProfile(firebaseUser.uid);
+            setUser(profile);
+        } else {
+            setUser(null);
+        }
+        setIsLoading(false);
+    });
+    return () => unsubscribe();
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -42,11 +45,11 @@ export const AuthProvider = ({ children }: { children?: ReactNode }) => {
     authLogout();
     setUser(null);
   };
-
+  
   const reloadUser = async () => {
-    if (user) {
-      const profile = await getUserProfile(user.id);
-      setUser(profile);
+    if (auth.currentUser) {
+        const profile = await getUserProfile(auth.currentUser.uid);
+        setUser(profile);
     }
   }
 

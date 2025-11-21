@@ -15,8 +15,8 @@ interface LabelProps extends React.ComponentPropsWithoutRef<typeof LabelPrimitiv
 }
 
 const Label = React.forwardRef<React.ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
-  ({ className, children, htmlFor, ...props }, ref) => (
-    <LabelPrimitive.Root ref={ref} className={cn(labelVariants(), className)} htmlFor={htmlFor} {...props}>
+  ({ className, children, htmlFor, ...props }, ref) => ( // Destructure htmlFor
+    <LabelPrimitive.Root ref={ref} className={cn(labelVariants(), className)} htmlFor={htmlFor} {...props}> // Pass htmlFor
       {children}
     </LabelPrimitive.Root>
   ),

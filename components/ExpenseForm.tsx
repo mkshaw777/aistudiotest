@@ -136,7 +136,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ advance, onExpenseAdded }) =>
             <div><Label>Others</Label><Input type="number" value={others} onChange={e => setOthers(parseFloat(e.target.value) || 0)} /></div>
           </div>
           <div>
-            <Label htmlFor="remarks">Remarks (Required if 'Others' &gt; 0)</Label>
+            <Label htmlFor="remarks">Remarks (Required if 'Others' > 0)</Label>
             <Textarea id="remarks" value={remarks} onChange={e => setRemarks(e.target.value)} required={others > 0} />
           </div>
           <div>

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
 import { Button } from '../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '../components/ui/card';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import BrandHeader from '../components/BrandHeader';
 import BrandFooter from '../components/BrandFooter';
 import { Alert, AlertDescription, AlertTitle } from '../components/ui/alert';
-import { Terminal } from 'lucide-react';
+import { Terminal, Info } from 'lucide-react';
 
 const Auth: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -77,6 +77,16 @@ const Auth: React.FC = () => {
               </div>
             </form>
           </CardContent>
+          <CardFooter className="flex flex-col gap-2">
+             <div className="text-xs text-slate-500 bg-slate-100 p-3 rounded-md w-full flex gap-2 items-start">
+                <Info className="h-4 w-4 mt-0.5 shrink-0 text-mk-blue-primary" />
+                <div>
+                    <p className="font-semibold">Default Admin Credentials:</p>
+                    <p>Email: admin@mkmarketing.com</p>
+                    <p>Password: admin123</p>
+                </div>
+             </div>
+          </CardFooter>
         </Card>
       </main>
       <BrandFooter />
